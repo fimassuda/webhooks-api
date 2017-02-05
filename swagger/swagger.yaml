@@ -1,0 +1,304 @@
+---
+swagger: "2.0"
+info:
+  description: "Get hooked with the Webhooks API"
+  version: "1.0.0"
+  title: "Webhooks API"
+host: "webhooks-vanhack.ztdkcs3wvq.us-west-2.elasticbeanstalk.com"
+basePath: "/v1"
+schemes:
+- "http"
+produces:
+- "application/json"
+paths:
+  /events:
+    get:
+      tags:
+      - "Events"
+      description: "Get all events waiting to be retried"
+      operationId: "eventsGET"
+      parameters: []
+      responses:
+        200:
+          description: "Events"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Bad Request"
+        405:
+          description: "Method Not Allowed"
+        415:
+          description: "Unsupported Media Type"
+      x-swagger-router-controller: "Events"
+  /events/{eventId}:
+    get:
+      tags:
+      - "Events"
+      description: "Get all events waiting to be retried"
+      operationId: "eventsEventIdGET"
+      parameters:
+      - name: "eventId"
+        in: "path"
+        description: "event id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Event delivered"
+          schema:
+            $ref: "#/definitions/Event"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Bad Request"
+        405:
+          description: "Method Not Allowed"
+        415:
+          description: "Unsupported Media Type"
+      x-swagger-router-controller: "Events"
+    delete:
+      tags:
+      - "Events"
+      description: "Get all events waiting to be retried"
+      operationId: "eventsEventIdDELETE"
+      parameters:
+      - name: "eventId"
+        in: "path"
+        description: "event id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Event delivered"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Bad Request"
+        405:
+          description: "Method Not Allowed"
+        415:
+          description: "Unsupported Media Type"
+      x-swagger-router-controller: "Events"
+  /webhooks:
+    get:
+      tags:
+      - "Webhook"
+      description: "All the webhooks created"
+      operationId: "webhooksGET"
+      parameters: []
+      responses:
+        200:
+          description: "An array of webhook"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Webhook"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Bad Request"
+        405:
+          description: "Method Not Allowed"
+        415:
+          description: "Unsupported Media Type"
+      x-swagger-router-controller: "Webhook"
+    post:
+      tags:
+      - "Webhook"
+      description: "Create new webhook"
+      operationId: "webhooksPOST"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Webhook"
+      responses:
+        201:
+          description: "New webhook created"
+          schema:
+            $ref: "#/definitions/Webhook"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not Allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        415:
+          description: "Unsupported Media Type"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Webhook"
+  /webhooks/{id}:
+    get:
+      tags:
+      - "Webhook"
+      description: "Get webhook by ID"
+      operationId: "webhooksIdGET"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "webhook id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "An array of price estimates by product"
+          schema:
+            $ref: "#/definitions/Webhook"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Bad Request"
+        405:
+          description: "Method Not Allowed"
+        415:
+          description: "Unsupported Media Type"
+      x-swagger-router-controller: "Webhook"
+    put:
+      tags:
+      - "Webhook"
+      description: "Update webhook by ID"
+      operationId: "webhooksIdPUT"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "webhook id"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Webhook"
+      responses:
+        204:
+          description: "Webhook updated"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Bad Request"
+        405:
+          description: "Method Not Allowed"
+        415:
+          description: "Unsupported Media Type"
+      x-swagger-router-controller: "Webhook"
+    delete:
+      tags:
+      - "Webhook"
+      description: "Delete webhook by ID"
+      operationId: "webhooksIdDELETE"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "webhook id"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Webhook deleted"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Bad Request"
+        405:
+          description: "Method Not Allowed"
+        415:
+          description: "Unsupported Media Type"
+      x-swagger-router-controller: "Webhook"
+  /webhooks/{id}/events:
+    get:
+      tags:
+      - "Events"
+      description: "Get all events waiting to be retried"
+      operationId: "webhooksIdEventsGET"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "webhook id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Event delivered"
+        202:
+          description: "Event accepted but not delivered yet\nEvent delivering will\
+            \ be hourly retried in the following 24 hours\n"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Bad Request"
+        405:
+          description: "Method Not Allowed"
+        415:
+          description: "Unsupported Media Type"
+      x-swagger-router-controller: "Events"
+    post:
+      tags:
+      - "Webhook"
+      description: "Create an event for the webhook id\nAll body will be delivered\
+        \ as an event\n"
+      operationId: "webhooksIdEventsPOST"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "webhook id"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Event"
+      responses:
+        200:
+          description: "Event delivered"
+        202:
+          description: "Event accepted but not yet delivered"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Bad Request"
+        405:
+          description: "Method Not Allowed"
+        415:
+          description: "Unsupported Media Type"
+      x-swagger-router-controller: "Webhook"
+definitions:
+  Webhook:
+    type: "object"
+    properties:
+      url:
+        type: "string"
+        description: "url to be invoked when an event happen for the created webhook"
+  Event:
+    type: "object"
+    properties:
+      url:
+        type: "string"
+        description: "url to be invoked"
+      header:
+        type: "string"
+        description: "header of the message to be sent"
+      body:
+        type: "string"
+        description: "Message to be sent in the body of the request"
+      webhookId:
+        type: "string"
+        description: "webhook related to the event"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
